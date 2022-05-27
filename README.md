@@ -1,22 +1,17 @@
-# AI-B 4 - Machine Learning Project
+# KI-B-4 - Machine Learning Project
 
-Repository for PStA in Machine Learning (AI-B-4)
+Repository for PStA in Machine Learning (KI-B-4)
 
-## About Dataset
+## Dataset
 
-The dataset is from the platform [kaggle](https://www.kaggle.com/datasets/kukuroo3/body-signal-of-smoking).
+Source of dataset: [kaggle](https://www.kaggle.com/datasets/kukuroo3/body-signal-of-smoking).
 
-### Dataset
+### Information
 
 This dataset is a collection of basic health biological signal data. The goal is to determine the presence or absence of smoking through bio-signals.
 
-The dataset is divided into type.
-1. entire dataset(smoking.csv) 
-2. the competition format(competition_format) 
-
 ### Columns
 
-data shape : (55692, 27)
 - ID : index
 - gender
 - age : 5-years gap
@@ -50,3 +45,7 @@ data shape : (55692, 27)
 Some post-processing and filtering has done from the raw data.
 
 [Link](https://www.data.go.kr/data/15007122/fileData.do)
+
+## Use Case
+
+The use case for our trained machine learning model is for health insurance agencies to determine (after a regular check up on them) wether or not a potential costumer has lied about them smoking on their insurance application.
