@@ -64,6 +64,7 @@ summary(X)
 y <- model.data.train[,"smoking"]
 
 # Compute model
+tic('Compute model hidden.layers=c(10,12,10) epochs 100')
 nn_model <- neuralnetwork(X, y, 
                           hidden.layers=c(10,12,10),
                           regression = FALSE, 
@@ -71,6 +72,7 @@ nn_model <- neuralnetwork(X, y,
                           learn.rates = 1e-04,
                           n.epochs = 100,
                           verbose=FALSE)
+toc()
 
 # Calculate prediction error and confusion matrix on validation set
 X.validate <- model.matrix(smoking ~ ., data = model.data.validate)
@@ -100,6 +102,45 @@ A[2,2]/(A[1,2]+A[2,2])   # True-Positive-Rate
 A[1,1]/(A[1,1]+A[2,1])   # True-Negative-Rate
 
 # Compute model
+tic('Compute model layers=c(15,12,10) epochs 100')
+nn_model <- neuralnetwork(X, y, 
+                          hidden.layers=c(15,12,10),
+                          regression = FALSE, 
+                          loss.type = "log", 
+                          learn.rates = 1e-04,
+                          n.epochs = 100,
+                          verbose=FALSE)
+toc()
+
+# Calculate prediction error and confusion matrix on validation set
+X.validate <- model.matrix(smoking ~ ., data = model.data.validate)
+X.validate <- X.validate[,-1]
+
+predictions <- predict(nn_model,X.validate)$predictions
+
+y.validate <- model.data.validate[,"smoking"]
+
+A <- matrix(0,ncol=2,nrow=2)
+
+colnames(A) <- c("Real: No smoker", " Real: Smoker")
+rownames(A) <- c("Prognose: No smoker", "Prognose: Smoker") 
+
+A[1,1] <- sum(ifelse(y.validate == 0 & predictions == 0, 1,0))
+A[1,2] <- sum(ifelse(y.validate == 1 & predictions == 0, 1,0))
+A[2,1] <- sum(ifelse(y.validate == 0 & predictions == 1, 1,0))
+A[2,2] <- sum(ifelse(y.validate == 1 & predictions == 1, 1,0))
+
+A
+
+# Missclassification error rate
+(A[1,2]+A[2,1])/(A[1,1]+A[1,2]+A[2,1]+A[2,2])
+
+# True-Positive & Ture-Negative Rate
+A[2,2]/(A[1,2]+A[2,2])   # True-Positive-Rate
+A[1,1]/(A[1,1]+A[2,1])   # True-Negative-Rate
+
+# Compute model
+tic('Compute model layers=c(15,12,10) epochs 150')
 nn_model <- neuralnetwork(X, y, 
                           hidden.layers=c(15,12,10),
                           regression = FALSE, 
@@ -107,6 +148,7 @@ nn_model <- neuralnetwork(X, y,
                           learn.rates = 1e-04,
                           n.epochs = 150,
                           verbose=FALSE)
+toc()
 
 # Calculate prediction error and confusion matrix on validation set
 X.validate <- model.matrix(smoking ~ ., data = model.data.validate)
@@ -136,6 +178,7 @@ A[2,2]/(A[1,2]+A[2,2])   # True-Positive-Rate
 A[1,1]/(A[1,1]+A[2,1])   # True-Negative-Rate
 
 # Compute model
+tic('Compute model hidden.layers=c(15,12,10,15) epochs 200')
 nn_model <- neuralnetwork(X, y, 
                           hidden.layers=c(15,12,10,15),
                           regression = FALSE, 
@@ -143,6 +186,7 @@ nn_model <- neuralnetwork(X, y,
                           learn.rates = 1e-04,
                           n.epochs = 200,
                           verbose=FALSE)
+toc()
 
 # Calculate prediction error and confusion matrix on validation set
 X.validate <- model.matrix(smoking ~ ., data = model.data.validate)
@@ -172,6 +216,7 @@ A[2,2]/(A[1,2]+A[2,2])   # True-Positive-Rate
 A[1,1]/(A[1,1]+A[2,1])   # True-Negative-Rate
 
 # Compute model
+tic('Compute model hidden.layers=c(15,8,15) epochs 120')
 nn_model <- neuralnetwork(X, y, 
                           hidden.layers=c(15,8,15),
                           regression = FALSE, 
@@ -179,6 +224,7 @@ nn_model <- neuralnetwork(X, y,
                           learn.rates = 1e-04,
                           n.epochs = 120,
                           verbose=FALSE)
+toc()
 
 # Calculate prediction error and confusion matrix on validation set
 X.validate <- model.matrix(smoking ~ ., data = model.data.validate)
@@ -209,6 +255,7 @@ A[1,1]/(A[1,1]+A[2,1])   # True-Negative-Rate
 
 
 # Compute model
+tic('Compute model hidden.layers=c(15,8,15,10,15,3,15) epochs 120')
 nn_model <- neuralnetwork(X, y, 
                           hidden.layers=c(15,8,15,10,15,3,15),
                           regression = FALSE, 
@@ -216,6 +263,7 @@ nn_model <- neuralnetwork(X, y,
                           learn.rates = 1e-04,
                           n.epochs = 120,
                           verbose=FALSE)
+toc()
 
 # Calculate prediction error and confusion matrix on validation set
 X.validate <- model.matrix(smoking ~ ., data = model.data.validate)
@@ -245,6 +293,7 @@ A[2,2]/(A[1,2]+A[2,2])   # True-Positive-Rate
 A[1,1]/(A[1,1]+A[2,1])   # True-Negative-Rate
 
 # Compute model
+tic('Compute model hidden.layers=c(8,15,8) epochs 120')
 nn_model <- neuralnetwork(X, y, 
                           hidden.layers=c(8,15,8),
                           regression = FALSE, 
@@ -252,6 +301,7 @@ nn_model <- neuralnetwork(X, y,
                           learn.rates = 1e-04,
                           n.epochs = 120,
                           verbose=FALSE)
+toc()
 
 # Calculate prediction error and confusion matrix on validation set
 X.validate <- model.matrix(smoking ~ ., data = model.data.validate)
@@ -279,7 +329,9 @@ A
 # True-Positive & Ture-Negative Rate
 A[2,2]/(A[1,2]+A[2,2])   # True-Positive-Rate
 A[1,1]/(A[1,1]+A[2,1])   # True-Negative-Rate
+
 # Compute model
+tic('Compute model hidden.layers=c(15,5,12) epochs 150')
 nn_model <- neuralnetwork(X, y, 
                           hidden.layers=c(15,5,12),
                           regression = FALSE, 
@@ -287,6 +339,45 @@ nn_model <- neuralnetwork(X, y,
                           learn.rates = 1e-04,
                           n.epochs = 150,
                           verbose=FALSE)
+toc()
+
+# Calculate prediction error and confusion matrix on validation set
+X.validate <- model.matrix(smoking ~ ., data = model.data.validate)
+X.validate <- X.validate[,-1]
+
+predictions <- predict(nn_model,X.validate)$predictions
+
+y.validate <- model.data.validate[,"smoking"]
+
+A <- matrix(0,ncol=2,nrow=2)
+
+colnames(A) <- c("Real: No smoker", " Real: Smoker")
+rownames(A) <- c("Prognose: No smoker", "Prognose: Smoker") 
+
+A[1,1] <- sum(ifelse(y.validate == 0 & predictions == 0, 1,0))
+A[1,2] <- sum(ifelse(y.validate == 1 & predictions == 0, 1,0))
+A[2,1] <- sum(ifelse(y.validate == 0 & predictions == 1, 1,0))
+A[2,2] <- sum(ifelse(y.validate == 1 & predictions == 1, 1,0))
+
+A
+
+# Missclassification error rate
+(A[1,2]+A[2,1])/(A[1,1]+A[1,2]+A[2,1]+A[2,2])
+
+# True-Positive & Ture-Negative Rate
+A[2,2]/(A[1,2]+A[2,2])   # True-Positive-Rate
+A[1,1]/(A[1,1]+A[2,1])   # True-Negative-Rate
+
+# Compute model
+tic('Compute model hidden.layers=c(3,4,3) epochs 100')
+nn_model <- neuralnetwork(X, y, 
+                          hidden.layers=c(15,5,12),
+                          regression = FALSE, 
+                          loss.type = "log", 
+                          learn.rates = 1e-04,
+                          n.epochs = 150,
+                          verbose=FALSE)
+toc()
 
 # Calculate prediction error and confusion matrix on validation set
 X.validate <- model.matrix(smoking ~ ., data = model.data.validate)
@@ -318,11 +409,11 @@ A[1,1]/(A[1,1]+A[2,1])   # True-Negative-Rate
 # Take nn hidden layers and neurons with best results on validation set.
 # Compute prediction error and true-positive/true-negative rate on test set.
 nn_model <- neuralnetwork(X, y, 
-                          hidden.layers=c(15,5,12),
+                          hidden.layers=c(15,8,15),
                           regression = FALSE, 
                           loss.type = "log", 
                           learn.rates = 1e-04,
-                          n.epochs = 150,
+                          n.epochs = 120,
                           verbose=FALSE)
 
 # Calculate prediction error and confusion matrix on validation set

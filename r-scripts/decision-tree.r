@@ -81,6 +81,8 @@ for (k in 2:10) {
     A[2,1] <- sum(ifelse(y.validate == 0 & predictions == 1, 1,0))
     A[2,2] <- sum(ifelse(y.validate == 1 & predictions == 1, 1,0))
 
+    print((A[1,2]+A[2,1])/(A[1,1]+A[1,2]+A[2,1]+A[2,2]))
+
     print(A[2,2]/(A[1,2]+A[2,2]))
     print(A[1,1]/(A[1,1]+A[2,1]))
 }
